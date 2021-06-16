@@ -326,8 +326,6 @@ export default {
         if (list[i][listKey] && list[i][listKey].length) {
           list[i].hasChild = true;
           this.resetHasChild(list[i][listKey]);
-        }else{
-          list[i].hasChild = false;
         }
       }
     },
