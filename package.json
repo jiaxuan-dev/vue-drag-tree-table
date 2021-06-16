@@ -1,8 +1,8 @@
 {
-  "name": "drag-tree-table",
+  "name": "jxdrag-tree-table",
   "description": "基于Vue实现可以拖拽排序的树形表格",
-  "version": "2.2.0",
-  "author": "yangjinkai",
+  "version": "1.0.0",
+  "author": "jiaxuan-dev",
   "license": "MIT",
   "main": "dist/dtree-table.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ColdDay/vue-drag-tree-table.git"
+    "url": "https://github.com/jiaxuan-dev/vue-drag-tree-table.git"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
