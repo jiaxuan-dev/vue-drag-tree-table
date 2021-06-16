@@ -152,7 +152,7 @@ export default {
       if (this.isFolder) {
         this.model[this.custom_field.open] =
           !this.model[this.custom_field.open];
-        console.log(this.onOpen);
+        // console.log(this.onOpen);
         if (typeof this.onOpen === "function") {
           this.onOpen(this.model);
         }

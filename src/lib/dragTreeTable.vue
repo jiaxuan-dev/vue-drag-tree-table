@@ -269,6 +269,9 @@ export default {
       let curDragItem = null;
       let taggetItem = null;
       function pushData(curList, needPushList) {
+        // if (curList[listKey] && curList[listKey].length) {
+        //   curList.hasChild = true;
+        // }
         for (let i = 0; i < curList.length; i++) {
           const item = curList[i];
           var obj = func.deepClone(item);
@@ -296,13 +299,13 @@ export default {
             }
           }
           if (item[listKey] && item[listKey].length) {
-            item.hasChild = true;
             pushData(item[listKey], obj[listKey]);
           }
         }
       }
       pushData(curList, newList);
       this.resetOrder(newList);
+      this.resetHasChild(newList)
       this.onDrag(newList, curDragItem, taggetItem, _this.whereInsert);
       this.$emit("drag", newList, curDragItem, taggetItem, _this.whereInsert);
     },
@@ -313,6 +316,18 @@ export default {
         list[i][this.custom_field.order] = i;
         if (list[i][listKey] && list[i][listKey].length) {
           this.resetOrder(list[i][listKey]);
+        }
+      }
+    },
+    resetHasChild(list) {
+      const listKey = this.custom_field.lists;
+      for (var i = 0; i < list.length; i++) {
+        // list[i][this.custom_field.order] = i;
+        if (list[i][listKey] && list[i][listKey].length) {
+          list[i].hasChild = true;
+          this.resetHasChild(list[i][listKey]);
+        }else{
+          list[i].hasChild = false;
         }
       }
     },
@@ -436,7 +451,7 @@ export default {
         for (var i = 0; i < list.length; i++) {
           if (list[i][_this.custom_field["id"]] == id) {
             var newRow = Object.assign({}, list[i], data);
-            console.log(2222, newRow);
+            // console.log(2222, newRow);
             list[i] = newRow;
           }
           if (list[i][listKey] && list[i][listKey].length) {
@@ -445,7 +460,7 @@ export default {
         }
       }
       deep(deepList);
-      console.log(deepList);
+      // console.log(deepList);
       this.data.lists = deepList;
     },
     GetChildIds(id, deep = true) {
@@ -540,7 +555,7 @@ export default {
         }
       });
     }, 100);
-    
+
     window.addEventListener("mouseup", (e) => {
       if (this.mouse.status) {
         const curX = e.clientX;
