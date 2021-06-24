@@ -63,6 +63,7 @@ export default {
       this.treeData.lists = list;
     },
     onAdd(pId, data) {
+      console.log(data)
       this.$refs.table.AddRow(pId, data);
     },
     onEdit(id, data) {

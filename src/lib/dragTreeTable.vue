@@ -415,6 +415,10 @@ export default {
       this.data.lists = list;
     },
     AddRow(pId, data) {
+      if(pId == '0'){
+        this.data.lists.push(data)
+        return
+      }
       const deepList = func.deepClone(this.data.lists);
       var _this = this;
       function deep(list) {
