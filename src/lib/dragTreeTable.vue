@@ -305,7 +305,7 @@ export default {
       }
       pushData(curList, newList);
       this.resetOrder(newList);
-      this.resetHasChild(newList)
+      this.resetHasChild(newList);
       this.onDrag(newList, curDragItem, taggetItem, _this.whereInsert);
       this.$emit("drag", newList, curDragItem, taggetItem, _this.whereInsert);
     },
@@ -414,14 +414,24 @@ export default {
       this.deepSetAttr("highlight", isHighlight, list, ids);
       this.data.lists = list;
     },
-    AddRow(pId, data) {
-      if(pId == '0'){
-        this.data.lists.push(data)
-        return
-      }
+    AddRow(pId, data, position) {
       const deepList = func.deepClone(this.data.lists);
       var _this = this;
       function deep(list) {
+        if (pId == "0") {
+          var newRow = Object.assign({}, data);
+          if (position === "top") {
+            // newRow[_this.custom_field["order"]] = 0;
+            list.unshift(newRow);
+            list.forEach((element, index) => {
+              element[_this.custom_field["order"]] = index;
+            });
+          } else if (position === "bottom") {
+            newRow[_this.custom_field["order"]] = list.length;
+            list.push(newRow);
+          }
+          return;
+        }
         const listKey = _this.custom_field.lists;
         for (var i = 0; i < list.length; i++) {
           if (list[i][_this.custom_field["id"]] == pId) {
@@ -429,8 +439,15 @@ export default {
             var newRow = Object.assign({}, data);
             newRow[_this.custom_field["parent_id"]] = pId;
             if (list[i][listKey]) {
-              newRow[_this.custom_field["order"]] = list[i][listKey].length;
-              list[i][listKey].push(newRow);
+              if (position === "bottom") {
+                newRow[_this.custom_field["order"]] = list[i][listKey].length;
+                list[i][listKey].push(newRow);
+              } else if (position === "top") {
+                list[i][listKey].unshift(newRow);
+                list[i][listKey].forEach((item, index) => {
+                  item[_this.custom_field["order"]] = index;
+                });
+              }
             } else {
               list[i][listKey] = [];
               newRow[_this.custom_field["order"]] = 0;

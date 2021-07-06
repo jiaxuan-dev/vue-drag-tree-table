@@ -3,7 +3,7 @@ const demoDataList = [
     id: 110,
     parent_id: 0,
     order: 0,
-    name: "客户管理",
+    name: "<a>客户管理</a>",
     uri: "无",
     open: true,
     hasChild: true,
@@ -12,12 +12,12 @@ const demoDataList = [
         id: 201,
         parent_id: 110,
         order: 0,
-        name: "联系人",
+        name: "<a>联系人</a>",
         uri: "/customer/contacts",
         lists: null,
         isShowCheckbox: false,
         hasChild: false,
-        highlight: true
+        highlight: false
       },
       {
         id: 173,

@@ -5,6 +5,7 @@
       <button @click="openAll">全部开</button>
       <button @click="highlight(true)">高亮行</button>
       <button @click="highlight(false)">取消高亮</button>
+      <button @click="addFRow">增加父节点</button>
       <dragTreeTable
         ref="table"
         :data="treeData"
@@ -17,10 +18,16 @@
         <template #selection="{ row }">
           {{ row.name }}
         </template>
+        <template #uri="{ row }">
+          <a href="" :title="row.uri"> {{ row.uri }}</a>
+        </template>
 
         <template #id="{ row }">
           {{ row.id }}
         </template>
+        <!-- <template #uri="{ row }">
+          {{ row.id }}
+        </template> -->
 
         <template #action="{ row }">
           <a class="action-item" @click.stop.prevent="add(row)">添加子节点</a>
@@ -55,16 +62,29 @@ export default {
     Dialog,
   },
   methods: {
-    open(row){
-      console.log(row)
+    addFRow() {
+      this.$refs.table.AddRow(0, {
+        id: 110111,
+        parent_id: 0,
+        order: 0,
+        name: "客户管理111",
+        uri: "无",
+        open: false,
+        hasChild: true,
+      });
+    },
+    open(row) {
+      console.log(row);
     },
     onTreeDataChange(list) {
       console.log(list);
       this.treeData.lists = list;
     },
     onAdd(pId, data) {
-      console.log(data)
-      this.$refs.table.AddRow(pId, data);
+      console.log(data);
+      this.$refs.table.AddRow(pId, data,'top');
+      
+      this.$refs.table.HighlightRow(data.id, true, true);
     },
     onEdit(id, data) {
       this.$refs.table.EditRow(id, data);
@@ -118,6 +138,7 @@ export default {
         align: "center",
       },
       {
+        type: "uri",
         title: "链接",
         field: "uri",
         width: 200,
